@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
+
 class Card extends React.PureComponent {
 	state = {
 		isDone: false,
-		backgroundColor: new Animated.Value(0),
+		animaetdValue: new Animated.Value(0),
 	};
 
 	constructor() {
@@ -23,14 +24,13 @@ class Card extends React.PureComponent {
 	}
 
 	toggleSwitch() {
-		// animate bg
+		// animate value
 		const value = this.state.isDone ? 0 : 300;
 		Animated.timing(
-            this.state.backgroundColor,
+            this.state.animaetdValue,
 			{
 				toValue: value,
 				duration: 300,
-				easing: Easing.linear,
 			},
         ).start();
 		// switch value
@@ -39,15 +39,19 @@ class Card extends React.PureComponent {
 
 	render() {
 		// interpolate bg color
-		const backgroundColor = this.state.backgroundColor.interpolate({
+		const backgroundColor = this.state.animaetdValue.interpolate({
        		inputRange: [0, 300],
-       		outputRange: ['rgba(255, 0, 0, 0.3)', 'rgba(0, 255, 0, 0.5)'],
+       		outputRange: ['rgba(255, 235, 75, 0.5)', 'rgba(235, 225, 200, 0.3)'],
 		});
-		
+		// inter font size
+		const fontSize = this.state.animaetdValue.interpolate({
+			inputRange: [0, 300],
+			outputRange: [25, 30],
+		});
 		return (
 			<Animated.View style={[ styles.cardContainer, { backgroundColor }]}>
 				<View style={styles.rowContentContainer}>
-					<Text>{this.props.text}</Text>
+					<Animated.Text style={[styles.text, {fontSize }]}>{this.props.text}</Animated.Text>
 				</View>
 				<View style={styles.rowSwicthContainer}>
 					<Switch value={this.state.isDone} onValueChange={this.toggleSwitch}/>
@@ -77,6 +81,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
+	},
+	text: {
+		color: 'black',
 	},
 });
 

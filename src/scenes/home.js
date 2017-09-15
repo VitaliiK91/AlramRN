@@ -6,12 +6,14 @@ import {
 	ScrollView,
 	StyleSheet,
 } from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import Button from '../components/Button';
 import CardsList from '../components/CardsList';
 
 
 const bgImage = require('../../img/bg.jpg');
 const BTN_SIZE = 100;
+const TIME_LOCALE = 'en-US';
 
 
 
@@ -20,19 +22,27 @@ class Home extends React.PureComponent {
 		cards: [],
 		byId: {
 			
-		}	
+		},
+		isTimePickerVisible: false,	
 	};
 	
 	constructor() {
 		super();
 
 		this.addCard = this.addCard.bind(this);
+		this.toggleimePicker = this.toggleimePicker.bind(this);
+		this.confirmTime = this.confirmTime.bind(this);
+	}
+
+	toggleimePicker() {
+		this.setState({ isTimePickerVisible: !this.state.isTimePickerVisible });
 	}
 	
 	// TODO: move to a service?
-	addCard(time) {
+	addCard(_time) {
 		const id = this.state.cards.length ? this.state.cards[0] + 1 : 0; // new id is either increment of first el or 0
 		const cards = this.state.cards.length > 0 ? [id, ...this.state.cards] : [0];
+		const time = new Date(_time).toLocaleTimeString(TIME_LOCALE, {hour: '2-digit', minute:'2-digit'});
 		const state = {
 			cards,
 			byId: {
@@ -44,6 +54,11 @@ class Home extends React.PureComponent {
 			},
 		};
 		this.setState(state);
+	}
+
+	confirmTime(time) {
+		this.addCard(time);
+		this.toggleimePicker();
 	}
 
 	render() {
@@ -62,9 +77,16 @@ class Home extends React.PureComponent {
 							icon='ios-add'
 							size={BTN_SIZE}
 							style={styles.addBtn}
-							onPress={() => this.addCard(new Date().toLocaleString())}
+							onPress={this.toggleimePicker}
 						/>
 					</View>
+					<DateTimePicker
+						isVisible={this.state.isTimePickerVisible}
+						titleIOS={'Pick a Time'}
+						mode={'time'}
+						onConfirm={this.confirmTime}
+						onCancel={this.toggleimePicker}
+					/>
 				</View>
 			</Image>
 		);
@@ -84,6 +106,7 @@ const styles = StyleSheet.create({
 	},
 	cardsListContainer: {
 		marginTop: 50,
+		marginBottom: 125,
 	},
 	addBtnContainer: {
 		position: 'absolute',
