@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PropTypes from 'prop-types';
 
 const Button = (props) => (
 	<TouchableOpacity
@@ -18,11 +19,17 @@ const Button = (props) => (
 	</TouchableOpacity>
 );
 
+Button.propTypes = {
+	icon: PropTypes.string.isRequired, // TODO: why string? Mb component?
+	size: PropTypes.number.isRequired,
+};
+
 const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-})
+});
+
 export default Button;

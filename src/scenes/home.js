@@ -7,6 +7,12 @@ import {
 	StyleSheet,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { cards as actions } from '../store/actions';
+import {
+	getCardsList,
+} from '../store/reducers/cards';
 import Button from '../components/Button';
 import CardsList from '../components/CardsList';
 
@@ -19,10 +25,6 @@ const TIME_LOCALE = 'en-US';
 
 class Home extends React.PureComponent {
 	state = {
-		cards: [],
-		byId: {
-			
-		},
 		isTimePickerVisible: false,	
 	};
 	
@@ -38,22 +40,9 @@ class Home extends React.PureComponent {
 		this.setState({ isTimePickerVisible: !this.state.isTimePickerVisible });
 	}
 	
-	// TODO: move to a service?
-	addCard(_time) {
-		const id = this.state.cards.length ? this.state.cards[0] + 1 : 0; // new id is either increment of first el or 0
-		const cards = this.state.cards.length > 0 ? [id, ...this.state.cards] : [0];
-		const time = new Date(_time).toLocaleTimeString(TIME_LOCALE, {hour: '2-digit', minute:'2-digit'});
-		const state = {
-			cards,
-			byId: {
-				...this.state.byId,
-				[id]: {
-					id,
-					time,
-				},
-			},
-		};
-		this.setState(state);
+	addCard(time) {
+		const text = new Date(time).toLocaleTimeString(TIME_LOCALE, { hour: '2-digit', minute:'2-digit' });
+		this.props.addCard(text);
 	}
 
 	confirmTime(time) {
@@ -70,7 +59,7 @@ class Home extends React.PureComponent {
 			>
 				<View style={styles.mainContainer}>
 					<View style={styles.cardsListContainer}>
-						<CardsList cards={this.state} />
+						<CardsList cards={this.props.cards} />
 					</View>
 					<View style={styles.addBtnContainer}>
 						<Button
@@ -120,5 +109,13 @@ const styles = StyleSheet.create({
 		overflow: 'hidden',
 		backgroundColor: 'lightblue',
 	},
-})
-export default Home;
+});
+
+export default connect(
+	(state) => ({
+		cards: getCardsList(state.cards),
+	}),
+	(dispatch) => ({
+		addCard: bindActionCreators(actions.addCard, dispatch),
+	}),
+)(Home);

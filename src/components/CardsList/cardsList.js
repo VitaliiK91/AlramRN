@@ -1,21 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
 	View,
 	ScrollView,
 } from 'react-native';
 import Card from '../Card';
 
-class CardsList extends React.PureComponent {
-	render() {
-		return (
-			<ScrollView>
-			{
-				this.props.cards.cards.map(
-					id => <Card key={id} text={this.props.cards.byId[id].time} />)
-			}
-			</ScrollView>
-		);
+const CardList = (props) => (
+	<ScrollView>
+	{
+		props.cards.map(card => <Card key={card.id} text={card.text} />)
 	}
-}
+	</ScrollView>
+);
 
-export default CardsList;
+CardList.propTypes = {
+	cards: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.number,
+		text: PropTypes.string,
+	})),
+};
+
+export default CardList;

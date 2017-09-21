@@ -8,6 +8,7 @@ import {
 	Easing,
 	Dimensions,
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 const { width } = Dimensions.get('window');
 
@@ -43,7 +44,7 @@ class Card extends React.PureComponent {
        		inputRange: [0, 300],
        		outputRange: ['rgba(255, 235, 75, 0.5)', 'rgba(235, 225, 200, 0.3)'],
 		});
-		// inter font size
+		// interpolate font size
 		const fontSize = this.state.animaetdValue.interpolate({
 			inputRange: [0, 300],
 			outputRange: [25, 30],
@@ -60,6 +61,10 @@ class Card extends React.PureComponent {
 		)
 	}
 }
+
+Card.propTypes = {
+	text: PropTypes.string.isRequired,
+};
 
 const styles = StyleSheet.create({
 	cardContainer: {
