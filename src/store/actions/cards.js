@@ -6,5 +6,6 @@ export const addCard = text => ({
 });
 
 export const toggleCard = id => ({
-	// TODO: whatever needs to happen
-})
+	type: CARDS.TOGGLE_CARD,
+	id,
+});

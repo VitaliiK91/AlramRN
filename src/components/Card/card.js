@@ -10,12 +10,13 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
+
 const { width } = Dimensions.get('window');
 
 class Card extends React.PureComponent {
 	state = {
 		isDone: false,
-		animaetdValue: new Animated.Value(0),
+		animaetdValue: new Animated.Value(300),
 	};
 
 	constructor() {
@@ -26,7 +27,7 @@ class Card extends React.PureComponent {
 
 	toggleSwitch() {
 		// animate value
-		const value = this.state.isDone ? 0 : 300;
+		const value = this.props.enabled ? 0 : 300;
 		Animated.timing(
             this.state.animaetdValue,
 			{
@@ -35,7 +36,7 @@ class Card extends React.PureComponent {
 			},
         ).start();
 		// switch value
-		this.setState({ isDone: !this.state.isDone });
+		this.props.onToggle();
 	}
 
 	render() {
@@ -55,7 +56,7 @@ class Card extends React.PureComponent {
 					<Animated.Text style={[styles.text, {fontSize }]}>{this.props.text}</Animated.Text>
 				</View>
 				<View style={styles.rowSwicthContainer}>
-					<Switch value={this.state.isDone} onValueChange={this.toggleSwitch}/>
+					<Switch value={this.props.enabled} onValueChange={this.toggleSwitch}/>
 				</View>
 			</Animated.View>
 		)
