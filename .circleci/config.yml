@@ -36,7 +36,7 @@ jobs:
       # run tests!
       - run: yarn test
 
-      # run linter
+      # run linter!
       - run:
           name: Linting files
           command: ./node_modules/.bin/eslint .
