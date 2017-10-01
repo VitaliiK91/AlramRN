@@ -1,7 +1,7 @@
 import React from 'react';
-import Home from './src/scenes/home';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import Home from './src/scenes/home';
 import rootReducer from './src/store/reducers';
 
 const store = createStore(rootReducer);

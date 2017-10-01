@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/VitaliiK91/AlramRN.svg?style=svg)](https://circleci.com/gh/VitaliiK91/AlramRN)
 # AlarmRN
 
 This project is an alarm clocks application for iOS/Android built with React Native

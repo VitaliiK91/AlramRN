@@ -1,8 +1,8 @@
 import * as actions from '../constants/cards';
 
 const cards = (state = { cardIds: [], byId: {} }, action) => {
-  switch (action.type) {
-    case actions.ADD_CARD:
+	switch (action.type) {
+		case actions.ADD_CARD: {
 			const id = state.cardIds.length ? state.cardIds[0] + 1 : 0; // new id is either increment of first el or 0
 			const cardIds = state.cardIds.length > 0 ? [id, ...state.cardIds] : [id];
 			return {
@@ -16,7 +16,8 @@ const cards = (state = { cardIds: [], byId: {} }, action) => {
 					},
 				},
 			};
-    case actions.TOGGLE_CARD: {
+		}
+		case actions.TOGGLE_CARD: {
 			return {
 				...state,
 				byId: {
@@ -27,11 +28,11 @@ const cards = (state = { cardIds: [], byId: {} }, action) => {
 					},
 				},
 			};
+		}
+		default:
+			return state;
 	}
-    default:
-      return state
-  }
-}
+};
 
 export default cards;
 

@@ -1,14 +1,13 @@
 import React from 'react';
 import {
 	View,
-	Text,
 	Image,
-	ScrollView,
 	StyleSheet,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import { cards as actions } from '../store/actions';
 import {
 	getCardsList,
@@ -16,18 +15,12 @@ import {
 import Button from '../components/Button';
 import CardsList from '../components/CardsList';
 
-
 const bgImage = require('../../img/bg.jpg');
+
 const BTN_SIZE = 100;
 const TIME_LOCALE = 'en-US';
 
-
-
 class Home extends React.PureComponent {
-	state = {
-		isTimePickerVisible: false,	
-	};
-	
 	constructor() {
 		super();
 
@@ -36,12 +29,16 @@ class Home extends React.PureComponent {
 		this.confirmTime = this.confirmTime.bind(this);
 	}
 
+	state = {
+		isTimePickerVisible: false,
+	};
+
 	toggleimePicker() {
 		this.setState({ isTimePickerVisible: !this.state.isTimePickerVisible });
 	}
-	
+
 	addCard(time) {
-		const text = new Date(time).toLocaleTimeString(TIME_LOCALE, { hour: '2-digit', minute:'2-digit' });
+		const text = new Date(time).toLocaleTimeString(TIME_LOCALE, { hour: '2-digit', minute: '2-digit' });
 		this.props.addCard(text);
 	}
 
@@ -63,7 +60,7 @@ class Home extends React.PureComponent {
 					</View>
 					<View style={styles.addBtnContainer}>
 						<Button
-							icon='ios-add'
+							icon="ios-add"
 							size={BTN_SIZE}
 							style={styles.addBtn}
 							onPress={this.toggleimePicker}
@@ -111,11 +108,24 @@ const styles = StyleSheet.create({
 	},
 });
 
+Home.defaultProps = {
+	cards: [],
+};
+
+Home.propTypes = {
+	cards: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.number,
+		text: PropTypes.string,
+		enabled: PropTypes.bool,
+	})),
+	addCard: PropTypes.func.isRequired,
+};
+
 export default connect(
-	(state) => ({
+	state => ({
 		cards: getCardsList(state.cards),
 	}),
-	(dispatch) => ({
+	dispatch => ({
 		addCard: bindActionCreators(actions.addCard, dispatch),
 	}),
 )(Home);
