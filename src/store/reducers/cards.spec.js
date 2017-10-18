@@ -1,4 +1,4 @@
-import cards , * as fromCards from './cards';
+import cards, * as fromCards from './cards';
 import * as actions from '../constants/cards';
 
 describe('cards reducer', () => {
@@ -22,8 +22,8 @@ describe('cards reducer', () => {
 					id: 0,
 					text: 'test',
 					enabled: true,
-				}
-			}
+				},
+			},
 		});
 	});
 
@@ -39,8 +39,8 @@ describe('cards reducer', () => {
 					id: 0,
 					text: 'test',
 					enabled: true,
-				}
-			}
+				},
+			},
 		};
 
 		expect(cards(state, action)).toEqual({
@@ -50,9 +50,9 @@ describe('cards reducer', () => {
 					id: 0,
 					text: 'test',
 					enabled: false,
-				}
-			}
-		})
+				},
+			},
+		});
 	});
 });
 
@@ -75,10 +75,10 @@ describe('cards selectors', () => {
 					id: 2,
 					text: 'bird',
 					enabled: true,
-				}
-			}
+				},
+			},
 		};
-		
+
 		expect(fromCards.getCardsList(state)).toEqual([
 			{
 				id: 1,

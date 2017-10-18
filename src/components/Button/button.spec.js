@@ -9,9 +9,9 @@ describe('button component', () => {
 			<Button
 				icon="ios-add"
 				size={100}
-			/>
+			/>,
 		);
-		let tree = button.toJSON();
+		const tree = button.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 
@@ -22,9 +22,9 @@ describe('button component', () => {
 				size={100}
 				onPress={() => 'cat'}
 				style={{ flex: 1 }}
-			/>
+			/>,
 		);
-		let tree = button.toJSON();
+		const tree = button.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 
@@ -36,9 +36,9 @@ describe('button component', () => {
 				size={100}
 				onPress={onPress}
 				style={{ flex: 1 }}
-			/>
+			/>,
 		);
 		button.find('TouchableOpacity').simulate('press');
 		expect(onPress).toHaveBeenCalled();
-	})
+	});
 });
