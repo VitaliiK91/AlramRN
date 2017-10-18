@@ -4,6 +4,8 @@
   "private": true,
   "devDependencies": {
     "babel-eslint": "7",
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-16": "^1.0.0",
     "eslint": "^4.8.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
@@ -11,6 +13,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^7.4.0",
     "jest-expo": "~20.0.0",
+    "jest-serializer-enzyme": "^1.0.0",
     "react-native-scripts": "1.3.1",
     "react-test-renderer": "^16.0.0"
   },
@@ -23,12 +26,16 @@
     "test": "node node_modules/jest/bin/jest.js"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFiles": [
+      "<rootDir>/src/setupTests.js"
+    ]
   },
   "dependencies": {
     "expo": "^20.0.0",
     "prop-types": "^15.6.0",
     "react": "16.0.0-alpha.12",
+    "react-dom": "^16.0.0",
     "react-native": "^0.47.0",
     "react-native-modal-datetime-picker": "^4.11.0",
     "react-native-vector-icons": "^4.3.0",
